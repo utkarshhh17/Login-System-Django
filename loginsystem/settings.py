@@ -125,7 +125,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 from dotenv import load_dotenv
 load_dotenv()
-SECRET_KEY = os.getenv('secret_key')
+SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
@@ -134,4 +134,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL')
 EMAIL_HOST_PASSWORD = os.getenv('PASSWORD')
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False

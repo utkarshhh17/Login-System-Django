@@ -5,6 +5,16 @@ from django.contrib.auth import authenticate,login,logout
 from django.core.mail import send_mail
 from loginsystem.settings import EMAIL_HOST_USER
 # Create your views here.
+
+def send(email):
+    subject = 'You have been succesfully signed up'
+    message = 'Hello world'
+    from_email = 'doreamonshinchan58@gmail.com'
+    recipient_list = [email]
+
+    # Sending the email
+    send_mail(subject, message, from_email, recipient_list)
+    
 def HomePage(request):
     return render(request,'home.html')
 
@@ -23,7 +33,8 @@ def SignupPage(request):
             my_user = User.objects.create_user(username=uname, email=email, password=pass1)
             my_user.save()
             messages.success(request, 'User has been created successfully')
-            return redirect('login')  # Or redirect to a different page
+            send(email)
+            return redirect('home')  # Or redirect to a different page
         except Exception as e:
             messages.error(request, f'Error creating user: {str(e)}')
             return render(request, 'signup.html')
@@ -38,13 +49,7 @@ def LoginPage(request):
         print(user)
         if user is not None:
             login(request,user)
-            send_mail(
-                'Login Successful',
-                'Your login was successful. Welcome!',
-                EMAIL_HOST_USER,  # Replace with your email
-                [user.email],  # Send email to the logged-in user
-                fail_silently=True,
-            )
+
             return redirect('home')
         else:
             return HttpResponse ("Username or Password is incorrect!!!")
